@@ -9,11 +9,11 @@ def string_to_json(input):
     #Creating dictonary to store output values
     output = dict()
 
-    ## Considering some of the cases had comma in the address line
-    #Spliting string with comma
+    
+    #Handling the case with comma
     commaSplits = input.split(',')
 
-    #checkign 
+     
     if len(commaSplits)>1:
         if hasNumber(commaSplits[0]):
             output["street"] = commaSplits[1].strip()
@@ -23,8 +23,9 @@ def string_to_json(input):
             output["housenumber"] = commaSplits[1].strip()
 
     else:
-        #Spliting string with comma
+        #Handling the case with space
         spaceSplits = input.split(' ')
+        
         numberIndex = dict()
 
 
@@ -32,8 +33,10 @@ def string_to_json(input):
             if hasNumber(splitstr):
                 numberIndex[spaceSplits.index(splitstr)]= spaceSplits.index(splitstr)
         
+        #Counting the numbers occurence in address
         numberSplitCount = len(numberIndex.keys())
-        
+
+        print(numberSplitCount)
         if numberSplitCount==1:
             startingIndexHouseNumber = int(list(numberIndex.keys())[0])
             
@@ -45,6 +48,7 @@ def string_to_json(input):
                 output["housenumber"] = (' '.join(spaceSplits[startingIndexHouseNumber:])).strip()
 
         else:
+            #Handling multiple numbers in the address case
             startingIndexHouseNumber = int(list(numberIndex.keys())[1])
             endingIndexStreet = int(list(numberIndex.keys())[0])
             output["street"] = (' '.join(spaceSplits[0:endingIndexStreet+1])).strip()
